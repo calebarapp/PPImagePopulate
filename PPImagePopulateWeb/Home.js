@@ -1,14 +1,29 @@
-﻿//=========================================================================================
-// Knockout.js ViewModel
+﻿//========================================================================================
+// contextual web search API variables: 
+const ApiKey = "4c077f935dmsh561fe54be2c0d5ap16df5ajsnc9876cbb6d35";
+const pageNumber = 1;
+const pageSize = 12;
+const autoCorrect = true;
+const safeSearch = false;
+const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q="
+    + keywords + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize + "&autoCorrect="
+    + autoCorrect + "&safeSearch=" + safeSearch;
+
+//========================================================================================
+
+//=========================================================================================
+// Image Search
 //=========================================================================================
 
 (function () {
     "use strict";
-    var messageBanner;
+
+    // knockout.js viewmodel for displaying list of searchresults 
     let imageResultsViewModel = {
         imageSearchResults: ko.observableArray([])
     }
-    
+
+    // Gets keyword from title and seperates bold text from body.
     function _getSearchKeywords() {
         let title = $('#slideTitle').val();
         let body = $('#slideBody').html();
@@ -43,15 +58,10 @@
     function getImages() {
         // query parameters
         const keywords = _getSearchKeywords();
-        const ApiKey = "4c077f935dmsh561fe54be2c0d5ap16df5ajsnc9876cbb6d35";
-        const pageNumber = 1;
-        const pageSize = 12;
-        const autoCorrect = true;
-        const safeSearch = false;
         isLoading(true);
         $.ajax({
             type: "GET",
-            url: "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q=" + keywords + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize + "&autoCorrect=" + autoCorrect + "&safeSearch=" + safeSearch,
+            url: ApiUrl,
             headers: { "X-RapidAPI-Key": ApiKey }
         }).done(function (data) {
             imageResultsViewModel.imageSearchResults(data.value);
@@ -59,15 +69,21 @@
         })
     }
 
-
-    // The initialize function must be run each time a new page is loaded.
+//=========================================================================================
+// Application initialization
+//=========================================================================================
+    
+    // Initilizes the task pane by: 
+    //1. enabling richTextarea
+    //2. declaring event listeners for key-up events in the inpt boxes
+    //3. apply knockout observables bindings
     Office.initialize = function (reason) {
         $(document).ready(function () {
             // Initialize the FabricUI notification mechanism and hide it
             var element = document.querySelector('.ms-MessageBanner');
             messageBanner = new fabric.MessageBanner(element);
             messageBanner.hideBanner();
-
+            // enables the richTextarea div tat allows bol dtext in mock text-area
             enableRichTextArea();
             // Searches half a second after a change in one of the textboxs. resets timer
             // on keyup.
@@ -97,11 +113,13 @@
         messageBanner.showBanner();
         messageBanner.toggleExpansion();
     }
+
+
     ko.applyBindings(imageResultsViewModel);
 })();
 
 //========================================================================
-// Selecting and images
+// Selecting images
 //========================================================================
 
 //  Toggles the hidden checkbox for a search item on click. Toggles the the "active" modifier on the search-result__img-container element
@@ -139,7 +157,7 @@ function getSlideData() {
 // slide data insert
 //===========================================================
 
-
+// Distrubutes tasks for populating a slide
 function populateSlide() {
     const slideData = getSlideData();
     //insertTitle(slideData.title);
@@ -173,7 +191,7 @@ function insertImages(urlList) {
     let imageLeft = 50;
     let imageTop = 50;
     const images = getBase64Image(urlList);
-
+    // insert each selected image
     for (let x = 0; x < urlList.length; x++) {
         //const image = images[x];
         imageLeft = margin + imageOrigin + imageWidth * x;
@@ -192,7 +210,7 @@ function insertImages(urlList) {
         });*/
     } 
 } 
-
+// Retrieves base64 of image Urls using ImageConvertApi service.
 function getBase64Image(imgs) {
     let images;
     $.ajax({
@@ -204,7 +222,6 @@ function getBase64Image(imgs) {
             console.log('success', data);
             images = data;
             return images;
-
         },
         error: function (x) {
             console.log('fail', x);
