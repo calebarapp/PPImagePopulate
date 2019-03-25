@@ -11801,11 +11801,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Caleb Rapp\\Documents\\Development\\PPImagePopulate\\ImageConvertApi\\ImageConvertApi.csproj",
+      "projectUniqueName": "C:\\Users\\Caleb Rapp\\Documents\\GitHub\\PPImagePopulate\\ImageConvertApi\\ImageConvertApi.csproj",
       "projectName": "ImageConvertApi",
-      "projectPath": "C:\\Users\\Caleb Rapp\\Documents\\Development\\PPImagePopulate\\ImageConvertApi\\ImageConvertApi.csproj",
+      "projectPath": "C:\\Users\\Caleb Rapp\\Documents\\GitHub\\PPImagePopulate\\ImageConvertApi\\ImageConvertApi.csproj",
       "packagesPath": "C:\\Users\\Caleb Rapp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Caleb Rapp\\Documents\\Development\\PPImagePopulate\\ImageConvertApi\\obj\\",
+      "outputPath": "C:\\Users\\Caleb Rapp\\Documents\\GitHub\\PPImagePopulate\\ImageConvertApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

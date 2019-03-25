@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
      Name="PPImagePopulate"
-     ProductID="{08663a70-123d-4963-a97e-0f6a57d74215}"
+     ProductID="{7ed22615-3d92-4959-abbd-0ffaa1c8dc70}"
      Version="1.0.0.0"
      SharePointMinVersion="15.0.0.0"
 >

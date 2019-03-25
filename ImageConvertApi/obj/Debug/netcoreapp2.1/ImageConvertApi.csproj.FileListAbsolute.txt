@@ -12,3 +12,17 @@ C:\Users\WhittneyNava\source\repos\PPImagePopulate\ImageConvertApi\obj\Debug\net
 C:\Users\WhittneyNava\source\repos\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.RazorTargetAssemblyInfo.cache
 C:\Users\WhittneyNava\source\repos\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.dll
 C:\Users\WhittneyNava\source\repos\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.pdb
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\bin\Debug\netcoreapp2.1\ImageConvertApi.deps.json
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\bin\Debug\netcoreapp2.1\ImageConvertApi.runtimeconfig.json
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\bin\Debug\netcoreapp2.1\ImageConvertApi.runtimeconfig.dev.json
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\bin\Debug\netcoreapp2.1\ImageConvertApi.dll
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\bin\Debug\netcoreapp2.1\ImageConvertApi.pdb
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.csprojAssemblyReference.cache
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.csproj.CoreCompileInputs.cache
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.RazorAssemblyInfo.cache
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.RazorAssemblyInfo.cs
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.AssemblyInfoInputs.cache
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.AssemblyInfo.cs
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.RazorTargetAssemblyInfo.cache
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.dll
+C:\Users\Caleb Rapp\Documents\GitHub\PPImagePopulate\ImageConvertApi\obj\Debug\netcoreapp2.1\ImageConvertApi.pdb
