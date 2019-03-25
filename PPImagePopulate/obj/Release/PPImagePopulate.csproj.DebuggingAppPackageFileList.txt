@@ -1,0 +1,2 @@
+bin\Release\OfficeAppManifests\PPImagePopulateManifest.xml
+C:\Users\WhittneyNava\source\repos\PPImagePopulate\PPImagePopulate\bin\Release\PPImagePopulate.debugapp

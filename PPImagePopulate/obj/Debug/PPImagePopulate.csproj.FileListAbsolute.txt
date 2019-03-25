@@ -1,0 +1,2 @@
+C:\Users\WhittneyNava\source\repos\PPImagePopulate\PPImagePopulate\obj\Debug\PPImagePopulate.csproj.CoreCompileInputs.cache
+C:\Users\WhittneyNava\source\repos\PPImagePopulate\PPImagePopulate\obj\Debug\PPImagePopulate.csprojAssemblyReference.cache
