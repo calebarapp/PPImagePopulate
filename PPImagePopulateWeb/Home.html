@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <script src="Scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="Scripts/FabricUI/MessageBanner.js" type="text/javascript"></script>
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+
+    <!-- To enable offline debugging using a local reference to Office.js, use:                        -->
+    <!-- <script src="Scripts/Office/MicrosoftAjax.js" type="text/javascript"></script>  -->
+    <!-- <script src="Scripts/Office/1/office.js" type="text/javascript"></script>  -->
+
+    <link href="Home.css" rel="stylesheet" type="text/css" />
+    
+
+    <!-- For the Office UI Fabric, go to https://aka.ms/office-ui-fabric to learn more. -->
+    <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.min.css">
+    <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/2.1.0/fabric.components.min.css">
+
+    <!-- To enable the offline use of Office UI Fabric, use: -->
+    <!-- link rel="stylesheet" href="Content/fabric.min.css" -->
+    <!-- link rel="stylesheet" href="Content/fabric.components.min.css" -->
+</head>
+<body>
+    <div id="content-main">
+        <div class="padding">
+            <br />
+            <p class="ms-font-xxl ms-fontColor-neutralSecondary ms-fontWeight-semilight">Slide Generator</p>
+            <br />
+
+            <div>
+                <div class="editor__input">
+                    <label>Title:</label>
+                    <input type="text" name="title" id="slideTitle" />
+                </div>
+                <div class="editor__input">
+                    <label>Body:</label>
+                    <div class="rich-textarea" id="slideBody"></div>
+                </div>
+            </div>
+            <div id="loadingIndicator" class="loading-indicator">Searching...</div>
+            <br />
+            <button class="ms-Button ms-Button--primary" id="get-data-from-selection" onclick="populateSlide()">
+                <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--plus"></i></span>
+                <span class="ms-Button-label">Populate Slide</span>
+            </button>
+            <br />
+            <!--Renders search results with knockout observable. Checkbox is hidden via CSS and activated via JS on click.
+        Url of image is value of checkbox input.
+              -->
+
+            <ul data-bind="foreach: imageSearchResults" class="search-results" id="searchResults">
+                <li data-bind="click: function(data, event){ imageSelect(event)}" class="search-results__img-container">
+                    <div class="search-results__img-shader"></div>
+                    <img data-bind="attr:{src: $data.url}" />
+                    <input data-bind="value: $data.url" class="search-results__checkbox" type="checkbox" name="images" />
+                </li>
+            </ul>
+            <br /><br />
+
+            <br /><br /><br />
+            <div class="ms-font-m"><a target="_blank" class="ms-Link ms-Link--hero" href="https://go.microsoft.com/fwlink/?LinkId=276812">Find more samples online...</a></div>
+        </div>
+    </div>
+    <!-- FabricUI component used for displaying notifications -->
+    <div class="ms-MessageBanner" id="notification-popup">
+        <div class="ms-MessageBanner-content">
+            <div class="ms-MessageBanner-text">
+                <div class="ms-MessageBanner-clipper">
+                    <div class="ms-font-m-plus ms-fontWeight-semibold" id="notification-header"></div>
+                    <div class="ms-font-m ms-fontWeight-semilight" id="notification-body"></div>
+                </div>
+            </div>
+            <button class="ms-MessageBanner-expand" style="display:none"><i class="ms-Icon ms-Icon--chevronsDown"></i> </button>
+            <div class="ms-MessageBanner-action"></div>
+        </div>
+        <button class="ms-MessageBanner-close"> <i class="ms-Icon ms-Icon--x"></i> </button>
+    </div>
+    <script type='text/javascript' src='https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js'></script>
+    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.3/jquery.xdomainrequest.min.js></script>
+    <script src="Home.js" type="text/javascript"></script>
+</body>
+</html>
