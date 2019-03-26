@@ -3,9 +3,9 @@ An add-in for generating images for powerpoint presentations. PPImagePopulate ta
 ## Startup
 PPImagePopulate relies on a service to convert urls into useable images for your slide. To run in Visual Studio, you must make sure this service starts up alongside the add-in. 
 - Right-click on the solution and select properties (PPImagePopulate > properties).
-![alt text](http://url/to/img.png)
+![alt text](./readmeImages/SolutionProperties.PNG?raw=true)
 - Select all projects for startup:
-![alt text](http://url/to/img.png)
+![alt text](./readmeImages/MultiProjectStart.PNG?raw=true)
 ------------------------------------------------------------------------------------------------------------------------------------------
 ## Use  
 Office Javascript API in its current implementation has many limititations, particularly with Powerpoint. Due to these limitations, there are some guidlines for use: 
