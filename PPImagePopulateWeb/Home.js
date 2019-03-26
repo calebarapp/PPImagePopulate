@@ -1,88 +1,15 @@
-﻿//========================================================================================
-// contextual web search API variables: 
-const ApiKey = "4c077f935dmsh561fe54be2c0d5ap16df5ajsnc9876cbb6d35";
-const pageNumber = 1;
-const pageSize = 12;
-const autoCorrect = true;
-const safeSearch = false;
-const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q="
-    + keywords + "&pageNumber=" + pageNumber + "&pageSize=" + pageSize + "&autoCorrect="
-    + autoCorrect + "&safeSearch=" + safeSearch;
-
-//========================================================================================
-
-//=========================================================================================
-// Image Search
-//=========================================================================================
-
-(function () {
-    "use strict";
-
-    // knockout.js viewmodel for displaying list of searchresults 
-    let imageResultsViewModel = {
-        imageSearchResults: ko.observableArray([])
-    }
-
-    // Gets keyword from title and seperates bold text from body.
-    function _getSearchKeywords() {
-        let title = $('#slideTitle').val();
-        let body = $('#slideBody').html();
-        let el = $('<div></div>');
-        el.html(body)
-        // Formating search keywords. Grabs all bold text, create an array, map through array to extract the text, join the array, replace whitespace with '+'.
-        body = $('b', el).toArray()
-            .map(function (x) { return x.innerHTML })
-            .join().trim()
-            .replace(' ', '+');
-        title = title.trim().replace(' ', '+');
-        // branching for keyword out put.
-        let results;
-        if (body) {
-            results = title + '+' + body;
-        } else {
-            results = title;
-        }
-        return results;
-    }
-
-    // True turns the searching component on, false turns it off.
-    function isLoading(bool) {
-        if (bool) {
-            $('#loadingIndicator').addClass('loading-indicator--active');
-        } else {
-            $('#loadingIndicator').removeClass('loading-indicator--active');
-        }
-    }
-
-    //AJAX call to get images for the multiple selection. isLoading() Controls the searching indicator.
-    function getImages() {
-        // query parameters
-        const keywords = _getSearchKeywords();
-        isLoading(true);
-        $.ajax({
-            type: "GET",
-            url: ApiUrl,
-            headers: { "X-RapidAPI-Key": ApiKey }
-        }).done(function (data) {
-            imageResultsViewModel.imageSearchResults(data.value);
-            isLoading(false);
-        })
-    }
-
-//=========================================================================================
+﻿//=========================================================================================
 // Application initialization
 //=========================================================================================
-    
+(function () {
+    "use strict";
     // Initilizes the task pane by: 
     //1. enabling richTextarea
     //2. declaring event listeners for key-up events in the inpt boxes
     //3. apply knockout observables bindings
     Office.initialize = function (reason) {
         $(document).ready(function () {
-            // Initialize the FabricUI notification mechanism and hide it
-            var element = document.querySelector('.ms-MessageBanner');
-            messageBanner = new fabric.MessageBanner(element);
-            messageBanner.hideBanner();
+           
             // enables the richTextarea div tat allows bol dtext in mock text-area
             enableRichTextArea();
             // Searches half a second after a change in one of the textboxs. resets timer
@@ -97,26 +24,74 @@ const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Sear
                 clearTimeout(imageQueryTimer);
                 imageQueryTimer = setTimeout(getImages, 500, event);
             });
+
+            function enableRichTextArea() {
+                $('.rich-textarea').each(function () {
+                    this.contentEditable = true;
+                });
+            }
         });
     };
-
-    function enableRichTextArea() {
-        $('.rich-textarea').each(function () {
-            this.contentEditable = true;
-        });
-    }
-
-    // Helper function for displaying notifications
-    function showNotification(header, content) {
-        $("#notification-header").text(header);
-        $("#notification-body").text(content);
-        messageBanner.showBanner();
-        messageBanner.toggleExpansion();
-    }
-
-
-    ko.applyBindings(imageResultsViewModel);
 })();
+//=========================================================================================
+// Image Search
+//=========================================================================================
+// Gets keyword from title and seperates bold text from body.
+function _getSearchKeywords() {
+    let title = $('#slideTitle').val();
+    let body = $('#slideBody').html();
+    let el = $('<div></div>');
+    el.html(body)
+    // Formating search keywords. Grabs all bold text, create an array, map through array to extract the text, join the array, replace whitespace with '+'.
+    body = $('b', el).toArray()
+        .map(function (x) { return x.innerHTML })
+        .join().trim()
+        .replace(' ', '+');
+    title = title.trim().replace(' ', '+');
+    // branching for keyword out put.
+    let results;
+    if (body) {
+        results = title + '+' + body;
+    } else {
+        results = title;
+    }
+    return results;
+}
+
+// True turns the searching component on, false turns it off.
+function isLoading(bool) {
+    if (bool) {
+        $('#loadingIndicator').addClass('loading-indicator--active');
+    } else {
+        $('#loadingIndicator').removeClass('loading-indicator--active');
+    }
+}
+
+//AJAX call to get images for the multiple selection. isLoading() Controls the searching indicator.
+function getImages() {
+    // contextual web search API variables: 
+    const ApiKey = "4c077f935dmsh561fe54be2c0d5ap16df5ajsnc9876cbb6d35";
+    const pageNumber = 1;
+    const pageSize = 12;
+    const autoCorrect = true;
+    const safeSearch = false;
+    const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q="
+    // query parameters
+    const keywords = _getSearchKeywords();
+    isLoading(true);
+    $.ajax({
+        type: "GET",
+        url: ApiUrl + keywords + "&pageNumber="
+            + pageNumber + "&pageSize=" + pageSize + "&autoCorrect="
+            + autoCorrect + "&safeSearch=" + safeSearch,
+        headers: { "X-RapidAPI-Key": ApiKey }
+    }).done(function (data) {
+        imageResultsViewModel.imageSearchResults(data.value);
+        isLoading(false);
+    }).fail(function () {
+        console.log('Failed to fetch images.');
+    });
+}
 
 //========================================================================
 // Selecting images
@@ -125,12 +100,6 @@ const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Sear
 //  Toggles the hidden checkbox for a search item on click. Toggles the the "active" modifier on the search-result__img-container element
 function imageSelect(e) {
     const el = e.currentTarget;
-    const input = $('input', el);
-    if (input.attr('checked') == true) {
-        input.attr('checked', false);
-    } else {
-        input.attr('checked', true);
-    };
     $('li', el).prevObject.toggleClass('search-results__img-container--active');
 }
 
@@ -157,76 +126,87 @@ function getSlideData() {
 // slide data insert
 //===========================================================
 
-// Distrubutes tasks for populating a slide
+// Utility for populating slide. Gets base64 of images.
+// getBase64Image() calls insertImage when ajax request is complete.
 function populateSlide() {
     const slideData = getSlideData();
-    //insertTitle(slideData.title);
-    //insertBody(slideData.body);
-    console.log(slideData.images);
-    insertImages(slideData.images)
+    // ajax request to ImageConvertApi. Calls insertImages() upon ajax complete.
+    if (slideData) {
+        getBase64Image(slideData.images)
+    }
+    clearSelection();
+    clearResults();
 }
 
-function insertTitle(title) {
-    Office.context.document.setSelectedDataAsync(title,
-        function (asyncResult) {
-            if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-                console.log(asyncResult.error.message);
-            }
-        });
-}
+// Retrieves base64 of image Urls using ImageConvertApi service.
+function getBase64Image(imgs) {
+    // encode each url
+    let images = JSON.stringify(imgs.map(function (x) {
+        return encodeURIComponent(x);
+    }));
 
-function insertBody(body) {
-    Office.context.document.setSelectedDataAsync(body,
-        function (asyncResult) {
-            if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-                console.log(asyncResult.error.message);
-            };
-        });
-}
+    let url = encodeURI("https://localhost:44386/api/imageConvert?urlsJson=" + images);
+    $.ajax({
+        crossDomain: true,
+        type: "GET",
+        data: images,
+        url: url,
+        dataType: "jsonp"
+    }).done(function (data) {
+        if (data != "failed") insertImages(data)
+    }).fail(function () { console.log('request for base64 failed') });
+};
 
-function insertImages(urlList) {
+
+//Iterates through each image and sets parameters for _insertImagesOfficeApi() which performs the actual insertions.
+function insertImages(images) {
     const margin = 3;
     const imageWidth = 200;
     let imageOrigin = 50;
     let imageLeft = 50;
     let imageTop = 50;
-    const images = getBase64Image(urlList);
-    // insert each selected image
-    for (let x = 0; x < urlList.length; x++) {
-        //const image = images[x];
+    for (let x = 0; x < images.length; x++) {
+        const image = images[x];
         imageLeft = margin + imageOrigin + imageWidth * x;
-        
-        /*Office.context.document.setSelectedDataAsync(image,
-            {
-        coercionType: Office.CoercionType.Image,
-        imageLeft: imageLeft,
-        imageTop: imageTop,
-        imageWidth: imageWidth
+        _insertImagesOfficeApi(image, imageLeft, imageTop, imageWidth);
+    }
+} 
+
+
+//Inserts image into Slide
+function _insertImagesOfficeApi(image, imageLeft, imageTop, imageWidth) {
+    Office.context.document.setSelectedDataAsync(image,
+        {
+            coercionType: Office.CoercionType.Image,
+            imageLeft: imageLeft,
+            imageTop: imageTop,
+            imageWidth: imageWidth
         },
         function (asyncResult) {
             if (asyncResult.status === Office.AsyncResultStatus.Failed) {
                 console.log(asyncResult.error.message);
             }
-        });*/
-    } 
-} 
-// Retrieves base64 of image Urls using ImageConvertApi service.
-function getBase64Image(imgs) {
-    let images;
-    $.ajax({
-        crossDomain: true,
-        type: "GET",
-        url: "https://localhost:44386/api/values?urls="+imgs,
-        dataType: "jsonp",
-        success: function (data) {
-            console.log('success', data);
-            images = data;
-            return images;
-        },
-        error: function (x) {
-            console.log('fail', x);
-        }
-    });
-};
+        });
+}
+//=============================================================================
+// Clear selection and results 
+//=============================================================================
+function clearSelection() {
+    $('#slideBody').html('');
+    $('#slideTitle').val('');
+}
+
+function clearResults() {
+    imageResultsViewModel.imageSearchResults([]);
+}
+
+//========================================================================
+//  Declare and apply knockout viewmodel 
+//========================================================================
+let imageResultsViewModel = {
+    imageSearchResults: ko.observableArray([])
+}
+// Apply knockout data-bindings
+ko.applyBindings(imageResultsViewModel);
 
 

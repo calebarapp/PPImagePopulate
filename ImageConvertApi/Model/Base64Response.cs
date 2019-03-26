@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ImageConvertApi.Model
 {
@@ -16,9 +18,8 @@ namespace ImageConvertApi.Model
             this.urlList = urlList;
         }
 
-        public List<string> urlList { get; set; }
+        private List<string> urlList { get; set; }
         public List<string> base64List { get; set; }
-
 
         // Performs fetch and coversion for each url in the url
         public void ConvertUrls()
@@ -26,8 +27,10 @@ namespace ImageConvertApi.Model
             List<string> tempBase64List = new List<string>();
             for(int i = 0; i < this.urlList.Count; i++)
             {
-
-                tempBase64List.Add(ConvertImageURLToBase64(urlList[i]));
+                try
+                {
+                    tempBase64List.Add(ConvertImageURLToBase64(urlList[i]));
+                } catch { } // if operation fails, skip to next iteration.
             }
             base64List = tempBase64List;
         }
@@ -35,19 +38,21 @@ namespace ImageConvertApi.Model
         // Gets image from url then converts it to base64. 
         private string ConvertImageURLToBase64(string url)
         {
+            //Get Image from url then convert to base64.
+            string decodedUrl = HttpUtility.UrlDecode(url);
+            Byte[] image = this.GetImage(decodedUrl);
+            string convertedImage = Convert.ToBase64String(image, 0, image.Length);
+
+            //create string from converted image.
             StringBuilder _sb = new StringBuilder();
-            Byte[] _byte = this.GetImage(url);
-
-            _sb.Append(Convert.ToBase64String(_byte, 0, _byte.Length));
-
+            _sb.Append(convertedImage);
             return _sb.ToString();
         }
 
         private byte[] GetImage(string url)
         {
             Stream stream = null;
-            byte[] buf;
-
+            byte[] image;
             try
             {
                 // Gets image from Url
@@ -59,19 +64,18 @@ namespace ImageConvertApi.Model
                 using (BinaryReader br = new BinaryReader(stream))
                 {
                     int len = (int)(response.ContentLength);
-                    buf = br.ReadBytes(len);
+                    image = br.ReadBytes(len);
                     br.Close();
                 }
-
                 stream.Close();
                 response.Close();
             }
-            catch (Exception exp)
+            catch
             {
-                buf = null;
+                image = null;
             }
 
-            return (buf);
+            return (image);
         }
     }
 }
