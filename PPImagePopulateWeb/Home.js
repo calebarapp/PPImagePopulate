@@ -1,4 +1,15 @@
 ﻿//=========================================================================================
+// Api settings - Used in getImages();
+//=========================================================================================
+const ApiKey = "4c077f935dmsh561fe54be2c0d5ap16df5ajsnc9876cbb6d35";
+const pageNumber = 1;
+const pageSize = 15;
+const autoCorrect = true;
+const safeSearch = false;
+const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q=";
+
+
+//=========================================================================================
 // Application initialization
 //=========================================================================================
 (function () {
@@ -68,14 +79,8 @@ function isLoading(bool) {
 }
 
 //AJAX call to get images for the multiple selection. isLoading() Controls the searching indicator.
+// Uses Api settings at top of page.
 function getImages() {
-    // contextual web search API variables: 
-    const ApiKey = "4c077f935dmsh561fe54be2c0d5ap16df5ajsnc9876cbb6d35";
-    const pageNumber = 1;
-    const pageSize = 15;
-    const autoCorrect = true;
-    const safeSearch = false;
-    const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q="
     // query parameters
     const keywords = _getSearchKeywords();
     isLoading(true);
