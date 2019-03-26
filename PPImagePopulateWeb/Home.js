@@ -72,7 +72,7 @@ function getImages() {
     // contextual web search API variables: 
     const ApiKey = "4c077f935dmsh561fe54be2c0d5ap16df5ajsnc9876cbb6d35";
     const pageNumber = 1;
-    const pageSize = 12;
+    const pageSize = 15;
     const autoCorrect = true;
     const safeSearch = false;
     const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI?q="
@@ -97,14 +97,16 @@ function getImages() {
 // Selecting images
 //========================================================================
 
-//  Toggles the hidden checkbox for a search item on click. Toggles the the "active" modifier on the search-result__img-container element
+//  Toggles the hidden checkbox for a search item on click. 
+//  Toggles the the "active" modifier on the search - result__img - container element
 function imageSelect(e) {
     const el = e.currentTarget;
     $('li', el).prevObject.toggleClass('search-results__img-container--active');
 }
 
-// limits image selection to four. 
+// limits image selection to 5. 
 function getSlideData() {
+    const imageCountLimit = 5;
     let items = $('#searchResults');
     items = $('.search-results__img-container--active > img', items);
     let slideData = {
@@ -115,7 +117,7 @@ function getSlideData() {
     slideData.title = $('#slideTitle')[0].value;
     slideData.body = $('#slideBody')[0].innerHTML;
     // get selected images and convert to base64
-    for (let x = 0; x < items.length && x < 4; x++) {
+    for (let x = 0; x < items.length && x < imageCountLimit; x++) {
         slideData.images.push(items[x].src);
     }
     return slideData;
