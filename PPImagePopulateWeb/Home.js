@@ -52,12 +52,9 @@ function _getSearchKeywords() {
     let title = $('#slideTitle').val();
     let body = $('#slideBody').html();
     let el = $('<div></div>');
-    el.html(body)
-    // Formating search keywords. Grabs all bold text, create an array, map through array to extract the text, join the array, replace whitespace with '+'.
-    body = $('b', el).toArray()
-        .map(function (x) { return x.innerHTML })
-        .join().trim()
-        .replace(' ', '+');
+    el.html(body);
+    // Formating search keywords. Replaces whitespace with '+'
+    body = body.trim().replace(' ', '+');
     title = title.trim().replace(' ', '+');
     // branching for keyword out put.
     let results;
@@ -69,7 +66,7 @@ function _getSearchKeywords() {
     return results;
 }
 
-// True turns the searching component on, false turns it off.
+// True turns the "searching" component on, false turns it off.
 function isLoading(bool) {
     if (bool) {
         $('#loadingIndicator').addClass('loading-indicator--active');
@@ -81,7 +78,6 @@ function isLoading(bool) {
 //AJAX call to get images for the multiple selection. isLoading() Controls the searching indicator.
 // Uses Api settings at top of page.
 function getImages() {
-    // query parameters
     const keywords = _getSearchKeywords();
     isLoading(true);
     $.ajax({
@@ -101,7 +97,6 @@ function getImages() {
 //========================================================================
 // Selecting images
 //========================================================================
-
 //  Toggles the hidden checkbox for a search item on click. 
 //  Toggles the the "active" modifier on the search - result__img - container element
 function imageSelect(e) {
