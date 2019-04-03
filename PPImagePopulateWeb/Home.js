@@ -47,22 +47,15 @@ const ApiUrl = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Sear
 //=========================================================================================
 // Image Search
 //=========================================================================================
-// Gets keyword from title and seperates bold text from body.
+// Gets keyword from title and body.
 function _getSearchKeywords() {
     let title = $('#slideTitle').val();
     let body = $('#slideBody').html();
-    let el = $('<div></div>');
-    el.html(body);
     // Formating search keywords. Replaces whitespace with '+'
     body = body.trim().replace(' ', '+');
     title = title.trim().replace(' ', '+');
-    // branching for keyword out put.
-    let results;
-    if (body) {
-        results = title + '+' + body;
-    } else {
-        results = title;
-    }
+    // formatting for keyword output.
+    let results = body ? title + '+' + body : title
     return results;
 }
 
